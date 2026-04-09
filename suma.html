@@ -228,8 +228,11 @@
 <body>
 
 <header>
-  <a href="index.html" title="Volver al inicio">🏠</a>
-  <h1>➕ La Suma</h1>
+  <a href="matematicas.html" title="Volver">◀</a>
+  <div>
+    <h1>➕ La Suma</h1>
+    <div id="nivelBadge" style="display:inline-block;margin-top:4px;padding:2px 12px;border-radius:12px;font-size:0.85rem;background:rgba(255,255,255,0.3);color:white;font-weight:bold;"></div>
+  </div>
 </header>
 
 <main>
@@ -391,12 +394,19 @@
       '<iframe src="https://www.youtube.com/embed/' + videoId + '" allowfullscreen></iframe>';
   })();
 
+  // ── Nivel desde URL ──
+  const nivelParam = parseInt(new URLSearchParams(window.location.search).get('nivel')) || 1;
+  const nivelMax   = { 1: 10, 2: 50, 3: 200 };
+  const nivelNombre = { 1: '🟢 Nivel 1 — Basico', 2: '🟡 Nivel 2 — Intermedio', 3: '🔴 Nivel 3 — Avanzado' };
+  document.getElementById('nivelBadge').textContent = nivelNombre[nivelParam];
+
   // ── Estado del quiz ──
   let n1 = 0, n2 = 0, correctas = 0, intentos = 0;
 
   function nuevoPregunta() {
-    n1 = Math.floor(Math.random() * 20) + 1;
-    n2 = Math.floor(Math.random() * 20) + 1;
+    const max = nivelMax[nivelParam];
+    n1 = Math.floor(Math.random() * max) + 1;
+    n2 = Math.floor(Math.random() * max) + 1;
     document.getElementById('problema').textContent = n1 + ' + ' + n2 + ' = ?';
     document.getElementById('respuesta').value = '';
     document.getElementById('feedback').textContent = '';

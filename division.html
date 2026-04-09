@@ -111,8 +111,11 @@
 <body>
 
 <header>
-  <a href="index.html">🏠</a>
-  <h1>➗ La Division</h1>
+  <a href="matematicas.html">◀</a>
+  <div>
+    <h1>➗ La Division</h1>
+    <div id="nivelBadge" style="display:inline-block;margin-top:4px;padding:2px 12px;border-radius:12px;font-size:0.85rem;background:rgba(255,255,255,0.3);color:white;font-weight:bold;"></div>
+  </div>
 </header>
 
 <main>
@@ -253,12 +256,19 @@
     }
   }
 
+  // ── Nivel desde URL ──
+  const nivelParam  = parseInt(new URLSearchParams(window.location.search).get('nivel')) || 1;
+  const nivelCociente = { 1: 5, 2: 10, 3: 20 };
+  const nivelDivisor  = { 1: 5, 2: 9,  3: 15 };
+  const nivelNombre   = { 1: '🟢 Nivel 1 — Basico', 2: '🟡 Nivel 2 — Intermedio', 3: '🔴 Nivel 3 — Avanzado' };
+  document.getElementById('nivelBadge').textContent = nivelNombre[nivelParam];
+
   // Quiz
   let n1 = 0, n2 = 0, correctas = 0, intentos = 0;
 
   function nuevoPregunta() {
-    n2 = Math.floor(Math.random() * 9) + 2;       // divisor 2..10
-    const cociente = Math.floor(Math.random() * 10) + 1; // resultado 1..10
+    n2 = Math.floor(Math.random() * nivelDivisor[nivelParam]) + 2;
+    const cociente = Math.floor(Math.random() * nivelCociente[nivelParam]) + 1;
     n1 = n2 * cociente;
     document.getElementById('problema').textContent = n1 + ' ÷ ' + n2 + ' = ?';
     document.getElementById('respuesta').value = '';

@@ -3,21 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatematiCas - Aprende jugando</title>
+  <title>AprenderCas - Ciencia y Matematicas</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #fff9f0;
+      background: #f8f9ff;
       min-height: 100vh;
     }
 
     /* HEADER */
     header {
-      background: linear-gradient(135deg, #ff6b6b, #feca57);
-      padding: 30px 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 40px 20px 50px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 0; right: 0;
+      height: 60px;
+      background: #f8f9ff;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     }
     header h1 {
       font-size: 3rem;
@@ -27,117 +37,167 @@
     }
     header p {
       font-size: 1.2rem;
-      color: white;
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    /* STARS DECORATION */
-    .stars {
-      font-size: 2rem;
+      color: rgba(255,255,255,0.9);
       margin-top: 10px;
-      letter-spacing: 8px;
+    }
+    .header-icons {
+      font-size: 2rem;
+      margin-top: 12px;
+      letter-spacing: 10px;
     }
 
     /* MAIN */
     main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 40px;
     }
 
     main h2 {
       text-align: center;
-      font-size: 1.6rem;
-      color: #555;
-      margin-bottom: 30px;
+      font-size: 1.4rem;
+      color: #888;
+      margin-bottom: 36px;
+      font-weight: normal;
     }
 
-    /* CARDS GRID */
+    /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 28px;
     }
 
     .card {
       background: white;
-      border-radius: 20px;
-      padding: 30px 20px;
+      border-radius: 24px;
+      padding: 36px 20px 28px;
       text-align: center;
       text-decoration: none;
       color: inherit;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
       transition: transform 0.2s, box-shadow 0.2s;
-      border-bottom: 5px solid transparent;
-      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
     }
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
     }
 
-    .card .icon { font-size: 3.5rem; margin-bottom: 12px; }
-    .card h3 { font-size: 1.3rem; margin-bottom: 6px; }
-    .card p { font-size: 0.9rem; color: #888; }
+    .card .icon   { font-size: 4rem; margin-bottom: 14px; display: block; }
+    .card h3      { font-size: 1.4rem; margin-bottom: 6px; }
+    .card p       { font-size: 0.9rem; color: #999; margin-bottom: 14px; }
+    .card .badge  {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
 
-    .card.suma   { border-color: #ff6b6b; }
-    .card.resta  { border-color: #48dbfb; }
-    .card.multi  { border-color: #ff9f43; }
-    .card.div    { border-color: #1dd1a1; }
+    /* Colores por materia */
+    .mat::before  { background: linear-gradient(90deg, #ff6b6b, #feca57); }
+    .fis::before  { background: linear-gradient(90deg, #48dbfb, #0abde3); }
+    .qui::before  { background: linear-gradient(90deg, #1dd1a1, #10ac84); }
+    .bio::before  { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
+    .his::before  { background: linear-gradient(90deg, #fd79a8, #e84393); }
+    .tec::before  { background: linear-gradient(90deg, #fdcb6e, #e17055); }
 
-    .card.suma h3   { color: #ff6b6b; }
-    .card.resta h3  { color: #0abde3; }
-    .card.multi h3  { color: #ff9f43; }
-    .card.div h3    { color: #10ac84; }
+    .mat h3 { color: #ff6b6b; }
+    .fis h3 { color: #0abde3; }
+    .qui h3 { color: #10ac84; }
+    .bio h3 { color: #6c5ce7; }
+    .his h3 { color: #e84393; }
+    .tec h3 { color: #e17055; }
 
-    /* FOOTER */
+    .mat .badge  { background: #fff5f5; color: #ff6b6b; }
+    .fis .badge  { background: #f0fbff; color: #0abde3; }
+    .qui .badge  { background: #f0fff8; color: #10ac84; }
+    .bio .badge  { background: #f5f3ff; color: #6c5ce7; }
+    .his .badge  { background: #fff0f7; color: #e84393; }
+    .tec .badge  { background: #fffbf0; color: #e17055; }
+
+    .coming {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+    .coming .badge { background: #f0f0f0 !important; color: #aaa !important; }
+
     footer {
       text-align: center;
       padding: 30px;
-      color: #aaa;
-      font-size: 0.9rem;
+      color: #bbb;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>MatematiCas</h1>
-    <p>Aprende matematicas jugando</p>
-    <div class="stars">⭐ ⭐ ⭐</div>
-  </header>
+<header>
+  <h1>AprenderCas</h1>
+  <p>Explora el mundo del conocimiento</p>
+  <div class="header-icons">🔭 🧪 📐 🌿</div>
+</header>
 
-  <main>
-    <h2>Elige un tema para practicar</h2>
+<main>
+  <h2>Elige una materia para empezar</h2>
 
-    <div class="grid">
-      <a href="suma.html" class="card suma">
-        <div class="icon">➕</div>
-        <h3>Suma</h3>
-        <p>Aprende a sumar numeros</p>
-      </a>
-      <a href="resta.html" class="card resta">
-        <div class="icon">➖</div>
-        <h3>Resta</h3>
-        <p>Practica la resta</p>
-      </a>
-      <a href="multiplicacion.html" class="card multi">
-        <div class="icon">✖️</div>
-        <h3>Multiplicacion</h3>
-        <p>Las tablas de multiplicar</p>
-      </a>
-      <a href="division.html" class="card div">
-        <div class="icon">➗</div>
-        <h3>Division</h3>
-        <p>Aprende a dividir</p>
-      </a>
-    </div>
-  </main>
+  <div class="grid">
 
-  <footer>
-    Hecho con amor para aprender matematicas
-  </footer>
+    <a href="matematicas.html" class="card mat">
+      <span class="icon">📐</span>
+      <h3>Matematicas</h3>
+      <p>Aritmetica, Geometria, Algebra y mas</p>
+      <span class="badge">4 temas disponibles</span>
+    </a>
+
+    <a href="fisica.html" class="card fis coming">
+      <span class="icon">⚡</span>
+      <h3>Fisica</h3>
+      <p>Fuerza, energia, movimiento y mas</p>
+      <span class="badge">Proximamente</span>
+    </a>
+
+    <a href="quimica.html" class="card qui coming">
+      <span class="icon">🧪</span>
+      <h3>Quimica</h3>
+      <p>Elementos, reacciones y moleculas</p>
+      <span class="badge">Proximamente</span>
+    </a>
+
+    <a href="biologia.html" class="card bio coming">
+      <span class="icon">🌿</span>
+      <h3>Biologia</h3>
+      <p>Celulas, animales, plantas y mas</p>
+      <span class="badge">Proximamente</span>
+    </a>
+
+    <a href="historia.html" class="card his coming">
+      <span class="icon">🏛️</span>
+      <h3>Historia</h3>
+      <p>Civilizaciones, eventos y personajes</p>
+      <span class="badge">Proximamente</span>
+    </a>
+
+    <a href="tecnologia.html" class="card tec coming">
+      <span class="icon">💻</span>
+      <h3>Tecnologia</h3>
+      <p>Computacion, internet y programacion</p>
+      <span class="badge">Proximamente</span>
+    </a>
+
+  </div>
+</main>
+
+<footer>AprenderCas — Aprender es divertido ⭐</footer>
 
 </body>
 </html>

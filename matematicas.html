@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matematicas - AprenderCas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff9f0;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #ff6b6b, #feca57);
+      padding: 24px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 0; right: 0;
+      height: 60px;
+      background: #fff9f0;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    .header-top a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.6rem;
+    }
+    header h1 { font-size: 2.2rem; color: white; text-shadow: 2px 2px 0 rgba(0,0,0,0.12); }
+    header p  { color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 4px; }
+
+    /* NIVEL SELECTOR */
+    .nivel-section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 20px 10px;
+    }
+    .nivel-label {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    .nivel-btns {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .nivel-btn {
+      padding: 10px 28px;
+      border-radius: 30px;
+      border: 3px solid transparent;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: white;
+    }
+    .nivel-btn.n1 { border-color: #1dd1a1; color: #1dd1a1; }
+    .nivel-btn.n2 { border-color: #feca57; color: #e6a817; }
+    .nivel-btn.n3 { border-color: #ff6b6b; color: #ff6b6b; }
+    .nivel-btn.active.n1 { background: #1dd1a1; color: white; }
+    .nivel-btn.active.n2 { background: #feca57; color: white; }
+    .nivel-btn.active.n3 { background: #ff6b6b; color: white; }
+    .nivel-btn:hover { transform: scale(1.05); }
+
+    .nivel-desc {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #aaa;
+      min-height: 20px;
+    }
+
+    /* TEMAS */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 20px 40px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 20px;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    /* ARITMETICA */
+    .sub-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #555;
+      margin: 30px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sub-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: #f0e0d0;
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 26px 16px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-bottom: 4px solid transparent;
+      position: relative;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .card .icon { font-size: 2.8rem; margin-bottom: 10px; display: block; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+    .card p { font-size: 0.82rem; color: #aaa; }
+
+    .card.suma  { border-color: #ff6b6b; } .card.suma h3  { color: #ff6b6b; }
+    .card.resta { border-color: #48dbfb; } .card.resta h3 { color: #0abde3; }
+    .card.multi { border-color: #ff9f43; } .card.multi h3 { color: #ff9f43; }
+    .card.div   { border-color: #1dd1a1; } .card.div h3   { color: #10ac84; }
+    .card.geo   { border-color: #a29bfe; } .card.geo h3   { color: #6c5ce7; }
+    .card.alg   { border-color: #fd79a8; } .card.alg h3   { color: #e84393; }
+    .card.cal   { border-color: #fdcb6e; } .card.cal h3   { color: #e17055; }
+    .card.est   { border-color: #74b9ff; } .card.est h3   { color: #0984e3; }
+
+    .coming {
+      opacity: 0.55;
+      cursor: default;
+      pointer-events: none;
+    }
+    .badge-soon {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #f0f0f0;
+      color: #aaa;
+      font-size: 0.65rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    footer { text-align:center; padding:24px; color:#bbb; font-size:0.85rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <a href="index.html">🏠</a>
+    <div>
+      <h1>📐 Matematicas</h1>
+      <p>Elige un tema y un nivel para practicar</p>
+    </div>
+  </div>
+</header>
+
+<!-- SELECTOR DE NIVEL -->
+<div class="nivel-section">
+  <div class="nivel-label">¿Que tan dificil quieres que sea?</div>
+  <div class="nivel-btns">
+    <button class="nivel-btn n1 active" onclick="setNivel(1)">🟢 Nivel 1 — Basico</button>
+    <button class="nivel-btn n2"        onclick="setNivel(2)">🟡 Nivel 2 — Intermedio</button>
+    <button class="nivel-btn n3"        onclick="setNivel(3)">🔴 Nivel 3 — Avanzado</button>
+  </div>
+  <div class="nivel-desc" id="nivelDesc">Numeros del 1 al 10 — perfecto para empezar</div>
+</div>
+
+<main>
+  <p class="section-title">Elige un tema</p>
+
+  <!-- ARITMETICA -->
+  <div class="sub-title">🔢 Aritmetica</div>
+  <div class="grid">
+    <a class="card suma"  id="link-suma"  href="suma.html?nivel=1">
+      <span class="icon">➕</span>
+      <h3>Suma</h3>
+      <p>Aprende a sumar</p>
+    </a>
+    <a class="card resta" id="link-resta" href="resta.html?nivel=1">
+      <span class="icon">➖</span>
+      <h3>Resta</h3>
+      <p>Practica la resta</p>
+    </a>
+    <a class="card multi" id="link-multi" href="multiplicacion.html?nivel=1">
+      <span class="icon">✖️</span>
+      <h3>Multiplicacion</h3>
+      <p>Las tablas</p>
+    </a>
+    <a class="card div"   id="link-div"   href="division.html?nivel=1">
+      <span class="icon">➗</span>
+      <h3>Division</h3>
+      <p>Aprende a dividir</p>
+    </a>
+  </div>
+
+  <!-- GEOMETRIA -->
+  <div class="sub-title">📏 Geometria</div>
+  <div class="grid">
+    <a class="card geo coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">🔺</span>
+      <h3>Figuras</h3>
+      <p>Triangulos, circulos...</p>
+    </a>
+    <a class="card geo coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">📐</span>
+      <h3>Angulos</h3>
+      <p>Tipos de angulos</p>
+    </a>
+    <a class="card geo coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">📦</span>
+      <h3>Area y Perimetro</h3>
+      <p>Medir figuras</p>
+    </a>
+  </div>
+
+  <!-- ALGEBRA -->
+  <div class="sub-title">🔣 Algebra</div>
+  <div class="grid">
+    <a class="card alg coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">🔡</span>
+      <h3>Ecuaciones</h3>
+      <p>Encuentra la X</p>
+    </a>
+    <a class="card alg coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">📈</span>
+      <h3>Funciones</h3>
+      <p>Graficas y formulas</p>
+    </a>
+  </div>
+
+  <!-- CALCULO -->
+  <div class="sub-title">∫ Calculo</div>
+  <div class="grid">
+    <a class="card cal coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">📉</span>
+      <h3>Limites</h3>
+      <p>Introduccion al calculo</p>
+    </a>
+    <a class="card cal coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">🔄</span>
+      <h3>Derivadas</h3>
+      <p>Tasas de cambio</p>
+    </a>
+  </div>
+
+  <!-- ESTADISTICA -->
+  <div class="sub-title">📊 Estadistica</div>
+  <div class="grid">
+    <a class="card est coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">📊</span>
+      <h3>Graficas</h3>
+      <p>Barras, pastel...</p>
+    </a>
+    <a class="card est coming" href="#">
+      <span class="badge-soon">Pronto</span>
+      <span class="icon">🎲</span>
+      <h3>Probabilidad</h3>
+      <p>Chances y posibilidades</p>
+    </a>
+  </div>
+
+</main>
+
+<footer>AprenderCas — Aprender es divertido ⭐</footer>
+
+<script>
+  const descripciones = {
+    1: 'Numeros del 1 al 10 — perfecto para empezar',
+    2: 'Numeros del 1 al 50 — un poco mas de reto',
+    3: 'Numeros del 1 al 200 — para los mas valientes 💪'
+  };
+
+  const operaciones = ['suma', 'resta', 'multi', 'div'];
+  const paginas = {
+    suma:  'suma.html',
+    resta: 'resta.html',
+    multi: 'multiplicacion.html',
+    div:   'division.html'
+  };
+
+  function setNivel(n) {
+    // Botones
+    document.querySelectorAll('.nivel-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nivel-btn')[n - 1].classList.add('active');
+
+    // Descripcion
+    document.getElementById('nivelDesc').textContent = descripciones[n];
+
+    // Actualizar links con ?nivel=n
+    operaciones.forEach(op => {
+      document.getElementById('link-' + op).href = paginas[op] + '?nivel=' + n;
+    });
+  }
+</script>
+
+</body>
+</html>
