@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suma - MatematiCas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff9f0;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #ff6b6b, #feca57);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.8rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: white;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    }
+
+    /* SECTIONS */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6b6b;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── VIDEO ── */
+    .video-wrapper {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a2e;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    /* PLACEHOLDER cuando no hay video */
+    .video-placeholder {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+      gap: 10px;
+      background: linear-gradient(135deg, #ff6b6b88, #feca5788);
+    }
+    .video-placeholder .play-icon { font-size: 4rem; }
+    .video-placeholder p { opacity: 0.9; font-size: 0.9rem; }
+
+    /* ── EJERCICIOS RESUELTOS ── */
+    .solved-wrapper {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .solved-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .solved-card {
+      border-left: 5px solid #ff6b6b;
+      background: #fff5f5;
+      border-radius: 0 12px 12px 0;
+      padding: 18px 20px;
+    }
+    .solved-card .problem {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    .solved-card .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .solved-card .step {
+      font-size: 1rem;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .solved-card .step .num {
+      background: #ff6b6b;
+      color: white;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .solved-card .answer {
+      margin-top: 12px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ff6b6b;
+      background: white;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 10px;
+      border: 2px solid #ff6b6b;
+    }
+
+    /* ── PRACTICA INTERACTIVA ── */
+    .practice-wrapper {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .quiz-box {
+      text-align: center;
+    }
+    .quiz-problem {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #333;
+      margin: 10px 0 20px;
+      letter-spacing: 4px;
+    }
+    .quiz-input {
+      font-size: 2rem;
+      width: 120px;
+      text-align: center;
+      border: 3px solid #ddd;
+      border-radius: 12px;
+      padding: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .quiz-input:focus { border-color: #ff6b6b; }
+
+    .btn-check {
+      display: block;
+      margin: 18px auto 0;
+      background: #ff6b6b;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 36px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-check:hover { background: #ee5a24; transform: scale(1.04); }
+
+    .feedback {
+      margin-top: 16px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      min-height: 40px;
+    }
+    .feedback.correct { color: #10ac84; }
+    .feedback.wrong   { color: #ee5a24; }
+
+    .score-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 16px;
+      font-size: 1rem;
+      color: #888;
+    }
+    .score-bar span { font-weight: bold; }
+    .score-bar .ok  { color: #10ac84; }
+    .score-bar .err { color: #ee5a24; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" title="Volver al inicio">🏠</a>
+  <h1>➕ La Suma</h1>
+</header>
+
+<main>
+
+  <!-- 1. VIDEO -->
+  <section class="video-wrapper">
+    <div class="section-title">🎬 Mira el video primero</div>
+    <div class="video-container">
+
+      <!--
+        ════════════════════════════════════════════
+        COMO AGREGAR TU VIDEO DE YOUTUBE:
+        1. Sube tu video a YouTube
+        2. Copia el ID del video (la parte despues de ?v=)
+           Ejemplo: https://youtube.com/watch?v=XXXXXXXXXXX
+                    el ID es: XXXXXXXXXXX
+        3. Reemplaza "TU_VIDEO_ID_AQUI" abajo con ese ID
+        4. Borra el div "video-placeholder"
+        ════════════════════════════════════════════
+      -->
+
+      <!--
+      <iframe
+        src="https://www.youtube.com/embed/TU_VIDEO_ID_AQUI"
+        allowfullscreen>
+      </iframe>
+      -->
+
+      <div class="video-placeholder">
+        <div class="play-icon">▶️</div>
+        <strong>Video proximamente</strong>
+        <p>Aqui va tu video de YouTube</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. EJERCICIOS RESUELTOS -->
+  <section class="solved-wrapper">
+    <div class="section-title">📖 Ejercicios resueltos</div>
+    <div class="solved-list">
+
+      <!-- Ejercicio 1 -->
+      <div class="solved-card">
+        <div class="problem">3 + 4 = ?</div>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            Tenemos 3 manzanas 🍎🍎🍎
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            Le agregamos 4 manzanas mas 🍎🍎🍎🍎
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            Contamos todas juntas: 1, 2, 3, 4, 5, 6, 7
+          </div>
+        </div>
+        <div class="answer">3 + 4 = 7 ✅</div>
+      </div>
+
+      <!-- Ejercicio 2 -->
+      <div class="solved-card">
+        <div class="problem">15 + 8 = ?</div>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            Empezamos desde el 15
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            Contamos 8 hacia adelante: 16, 17, 18, 19, 20, 21, 22, 23
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            Llegamos al 23
+          </div>
+        </div>
+        <div class="answer">15 + 8 = 23 ✅</div>
+      </div>
+
+      <!-- Ejercicio 3 -->
+      <div class="solved-card">
+        <div class="problem">24 + 13 = ?</div>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            Sumamos las unidades primero: 4 + 3 = 7
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            Sumamos las decenas: 20 + 10 = 30
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            Juntamos el resultado: 30 + 7 = 37
+          </div>
+        </div>
+        <div class="answer">24 + 13 = 37 ✅</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. PRACTICA -->
+  <section class="practice-wrapper">
+    <div class="section-title">🎮 Ahora practica tu!</div>
+    <div class="quiz-box">
+      <div class="quiz-problem" id="problema">? + ? = ?</div>
+      <input
+        class="quiz-input"
+        type="number"
+        id="respuesta"
+        placeholder="?"
+        min="0"
+        max="999"
+        onkeydown="if(event.key==='Enter') verificar()"
+      />
+      <button class="btn-check" onclick="verificar()">Verificar ✔</button>
+      <div class="feedback" id="feedback"></div>
+      <div class="score-bar">
+        <div>Correctas: <span class="ok" id="correctas">0</span></div>
+        <div>Intentos: <span id="intentos">0</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>MatematiCas — Aprender es divertido ⭐</footer>
+
+<script>
+  // ════════════════════════════════════════════
+  // PEGA AQUI TU LINK DE YOUTUBE 👇
+  // Ejemplo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  //          "https://youtu.be/dQw4w9WgXcQ"
+  // Deja comillas vacias ("") si aun no tienes video
+  // ════════════════════════════════════════════
+  const MI_VIDEO_YOUTUBE = "";
+
+  // ── Carga automatica del video ──
+  (function() {
+    const url = MI_VIDEO_YOUTUBE.trim();
+    if (!url) return; // sin video, muestra placeholder
+
+    // Extrae el ID del link (funciona con youtube.com y youtu.be)
+    let videoId = null;
+    const m1 = url.match(/[?&]v=([^&]+)/);
+    const m2 = url.match(/youtu\.be\/([^?&]+)/);
+    if (m1) videoId = m1[1];
+    else if (m2) videoId = m2[1];
+
+    if (!videoId) return;
+
+    // Reemplaza placeholder con el iframe
+    const container = document.querySelector('.video-container');
+    container.innerHTML =
+      '<iframe src="https://www.youtube.com/embed/' + videoId + '" allowfullscreen></iframe>';
+  })();
+
+  // ── Estado del quiz ──
+  let n1 = 0, n2 = 0, correctas = 0, intentos = 0;
+
+  function nuevoPregunta() {
+    n1 = Math.floor(Math.random() * 20) + 1;
+    n2 = Math.floor(Math.random() * 20) + 1;
+    document.getElementById('problema').textContent = n1 + ' + ' + n2 + ' = ?';
+    document.getElementById('respuesta').value = '';
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+    document.getElementById('respuesta').focus();
+  }
+
+  function verificar() {
+    const input = document.getElementById('respuesta');
+    const val = parseInt(input.value);
+    const fb  = document.getElementById('feedback');
+
+    if (isNaN(val)) {
+      fb.textContent = '⚠️ Escribe un numero';
+      fb.className = 'feedback wrong';
+      return;
+    }
+
+    intentos++;
+    document.getElementById('intentos').textContent = intentos;
+
+    if (val === n1 + n2) {
+      correctas++;
+      document.getElementById('correctas').textContent = correctas;
+      fb.textContent = '🎉 ¡Muy bien! ¡Correcto!';
+      fb.className = 'feedback correct';
+      setTimeout(nuevoPregunta, 1400);
+    } else {
+      fb.textContent = '😅 Intenta de nuevo...';
+      fb.className = 'feedback wrong';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  // Arrancar
+  nuevoPregunta();
+</script>
+
+</body>
+</html>

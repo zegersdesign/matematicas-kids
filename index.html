@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatematiCas - Aprende jugando</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff9f0;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #ff6b6b, #feca57);
+      padding: 30px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+      letter-spacing: 2px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: white;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    /* STARS DECORATION */
+    .stars {
+      font-size: 2rem;
+      margin-top: 10px;
+      letter-spacing: 8px;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    /* CARDS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-bottom: 5px solid transparent;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+    }
+
+    .card .icon { font-size: 3.5rem; margin-bottom: 12px; }
+    .card h3 { font-size: 1.3rem; margin-bottom: 6px; }
+    .card p { font-size: 0.9rem; color: #888; }
+
+    .card.suma   { border-color: #ff6b6b; }
+    .card.resta  { border-color: #48dbfb; }
+    .card.multi  { border-color: #ff9f43; }
+    .card.div    { border-color: #1dd1a1; }
+
+    .card.suma h3   { color: #ff6b6b; }
+    .card.resta h3  { color: #0abde3; }
+    .card.multi h3  { color: #ff9f43; }
+    .card.div h3    { color: #10ac84; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>MatematiCas</h1>
+    <p>Aprende matematicas jugando</p>
+    <div class="stars">⭐ ⭐ ⭐</div>
+  </header>
+
+  <main>
+    <h2>Elige un tema para practicar</h2>
+
+    <div class="grid">
+      <a href="suma.html" class="card suma">
+        <div class="icon">➕</div>
+        <h3>Suma</h3>
+        <p>Aprende a sumar numeros</p>
+      </a>
+      <a href="resta.html" class="card resta">
+        <div class="icon">➖</div>
+        <h3>Resta</h3>
+        <p>Practica la resta</p>
+      </a>
+      <a href="multiplicacion.html" class="card multi">
+        <div class="icon">✖️</div>
+        <h3>Multiplicacion</h3>
+        <p>Las tablas de multiplicar</p>
+      </a>
+      <a href="division.html" class="card div">
+        <div class="icon">➗</div>
+        <h3>Division</h3>
+        <p>Aprende a dividir</p>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    Hecho con amor para aprender matematicas
+  </footer>
+
+</body>
+</html>
